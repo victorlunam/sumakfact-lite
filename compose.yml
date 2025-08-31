@@ -1,0 +1,22 @@
+services:
+  api:
+    build: ./api
+    environment:
+      - NODE_ENV=production
+      - PORT=80
+      - APP_KEY=${APP_KEY}
+      - HOST=0.0.0.0
+      - LOG_LEVEL=info
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DECOLECTA_API_KEY=${DECOLECTA_API_KEY}
+      - VIRTUAL_HOST=api-lite.sumakfact.com
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: proxynet

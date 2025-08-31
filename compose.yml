@@ -13,7 +13,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_DATABASE=${DB_DATABASE}
       - DECOLECTA_API_KEY=${DECOLECTA_API_KEY}
-      - VIRTUAL_HOST=api-lite.sumakfact.com
+      - VIRTUAL_HOST=api-lite.f.sumakfact.com
     restart: unless-stopped
 
 networks:

@@ -32,7 +32,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nodejs
 
 # Copy built application
-COPY --from=builder --chown=nodejs:nodejs /app/build ./build
+COPY --from=builder --chown=nodejs:nodejs /app/build ./
 COPY --from=builder --chown=nodejs:nodejs /app/package*.json ./
 COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
 

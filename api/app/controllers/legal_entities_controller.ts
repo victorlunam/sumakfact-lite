@@ -9,29 +9,6 @@ export default class LegalEntitiesController {
   constructor(private decolecta: DecolectaService) {}
 
   /**
-   * Health check endpoint to verify database connectivity
-   */
-  async health({ response }: HttpContext) {
-    try {
-      // Test database connection with a simple query
-      await LegalEntityPerson.query().limit(1)
-
-      return response.json({
-        success: true,
-        message: 'Database connection is healthy',
-        timestamp: new Date().toISOString(),
-      })
-    } catch (error) {
-      console.error('Database health check failed:', error)
-      return response.status(503).json({
-        success: false,
-        error: 'Database connection failed',
-        details: error instanceof Error ? error.message : 'Unknown error',
-      })
-    }
-  }
-
-  /**
    * Retry mechanism for Decolecta service calls
    */
   private async retryServiceCall<T>(
@@ -89,7 +66,13 @@ export default class LegalEntitiesController {
         }
       }
 
-      // 3. Return our database record in legacy format
+      // 3. Return our database record in legacy format with proper location mapping
+      const ubigeo = person.ubigeo || ''
+      const departmentId = ubigeo.length >= 2 ? ubigeo.substring(0, 2) : ''
+      const provinceId = ubigeo.length >= 4 ? ubigeo.substring(2, 4) : null
+      const districtId = ubigeo.length >= 6 ? ubigeo.substring(4, 6) : null
+      const address = person.address || ''
+
       return response.json({
         success: true,
         data: {
@@ -97,9 +80,13 @@ export default class LegalEntitiesController {
             person.full_name ||
             `${person.first_last_name || ''} ${person.second_last_name || ''} ${person.first_name || ''}`.trim(),
           trade_name: '',
-          address: person.address || '',
-          location_id: person.ubigeo || '',
-          phone: '',
+          location_id: [departmentId, provinceId, districtId],
+          address: address,
+          department_id: departmentId,
+          province_id: provinceId,
+          district_id: districtId,
+          condition: '',
+          state: '',
         },
       })
     } catch (error) {
@@ -141,15 +128,25 @@ export default class LegalEntitiesController {
         }
       }
 
-      // 3. Return our database record in legacy format
+      // 3. Return our database record in legacy format with proper location mapping
+      const ubigeo = company.ubigeo || ''
+      const departmentId = ubigeo.length >= 2 ? ubigeo.substring(0, 2) : null
+      const provinceId = ubigeo.length >= 4 ? ubigeo.substring(2, 4) : null
+      const districtId = ubigeo.length >= 6 ? ubigeo.substring(4, 6) : null
+      const address = company.direccion || ''
+
       return response.json({
         success: true,
         data: {
           name: company.razon_social || '',
           trade_name: company.nombre_comercial || company.razon_social || '',
-          address: company.direccion || '',
+          address: address,
+          department_id: departmentId,
+          province_id: provinceId,
+          district_id: districtId,
           location_id: company.ubigeo || '',
-          phone: '', // RUC endpoint doesn't provide phone
+          condition: company.condicion || '',
+          state: company.estado || '',
         },
       })
     } catch (error) {

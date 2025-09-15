@@ -89,6 +89,10 @@ export default class LegalEntitiesController {
           state: '',
           ubigeo: [departmentId, provinceId, districtId], // Return ubigeo as array
           direccion: address, // Add direccion field for PHP compatibility
+          // Individual name fields for PHP compatibility
+          apellido_paterno: person.first_last_name || '',
+          apellido_materno: person.second_last_name || '',
+          nombres: person.first_name || '',
         },
       })
     } catch (error) {

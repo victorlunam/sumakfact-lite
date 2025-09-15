@@ -87,6 +87,7 @@ export default class LegalEntitiesController {
           district_id: districtId,
           condition: '',
           state: '',
+          ubigeo: [departmentId, provinceId, districtId], // Return ubigeo as array
         },
       })
     } catch (error) {
@@ -144,9 +145,10 @@ export default class LegalEntitiesController {
           department_id: departmentId,
           province_id: provinceId,
           district_id: districtId,
-          location_id: company.ubigeo || '',
+          location_id: ubigeo, // Use the full ubigeo string as expected by PHP interface
           condition: company.condicion || '',
           state: company.estado || '',
+          ubigeo: [departmentId, provinceId, districtId], // Return ubigeo as array
         },
       })
     } catch (error) {

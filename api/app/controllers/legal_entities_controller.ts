@@ -69,8 +69,8 @@ export default class LegalEntitiesController {
       // 3. Return our database record in legacy format with proper location mapping
       const ubigeo = person.ubigeo || ''
       const departmentId = ubigeo.length >= 2 ? ubigeo.substring(0, 2) : ''
-      const provinceId = ubigeo.length >= 4 ? ubigeo.substring(2, 4) : null
-      const districtId = ubigeo.length >= 6 ? ubigeo.substring(4, 6) : null
+      const provinceId = ubigeo.length >= 4 ? ubigeo.substring(0, 4) : null
+      const districtId = ubigeo.length >= 6 ? ubigeo.substring(0, 6) : null
       const address = person.address || ''
 
       return response.json({
@@ -137,8 +137,8 @@ export default class LegalEntitiesController {
       // 3. Return our database record in legacy format with proper location mapping
       const ubigeo = company.ubigeo || ''
       const departmentId = ubigeo.length >= 2 ? ubigeo.substring(0, 2) : null
-      const provinceId = ubigeo.length >= 4 ? ubigeo.substring(2, 4) : null
-      const districtId = ubigeo.length >= 6 ? ubigeo.substring(4, 6) : null
+      const provinceId = ubigeo.length >= 4 ? ubigeo.substring(0, 4) : null
+      const districtId = ubigeo.length >= 6 ? ubigeo.substring(0, 6) : null
       const address = company.direccion || ''
 
       return response.json({

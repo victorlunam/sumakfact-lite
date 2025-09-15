@@ -88,6 +88,7 @@ export default class LegalEntitiesController {
           condition: '',
           state: '',
           ubigeo: [departmentId, provinceId, districtId], // Return ubigeo as array
+          direccion: address, // Add direccion field for PHP compatibility
         },
       })
     } catch (error) {
@@ -149,6 +150,7 @@ export default class LegalEntitiesController {
           condition: company.condicion || '',
           state: company.estado || '',
           ubigeo: [departmentId, provinceId, districtId], // Return ubigeo as array
+          direccion: address, // Add direccion field for PHP compatibility
         },
       })
     } catch (error) {

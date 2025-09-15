@@ -156,6 +156,8 @@ export default class LegalEntitiesController {
           ubigeo: [departmentId, provinceId, districtId], // Return ubigeo as array
           direccion: address, // Add direccion field for PHP compatibility
           nombre_o_razon_social: company.razon_social || '', // Add field for PHP compatibility
+          condicion: company.condicion || '', // Add condicion field for PHP compatibility
+          estado: company.estado || '', // Add estado field for PHP compatibility
         },
       })
     } catch (error) {
